@@ -2,31 +2,60 @@ import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Set;
 
 public class DataSet {
 
 	String titleAttrs[];
-	LinkedList<ArrayList> dRows=new LinkedList<ArrayList>();
-	
-	public DataSet(String fileName) {
+	LinkedList<Transaction> dRows = new LinkedList<Transaction>();
+	HashMap<Set<String>, Integer> support = new HashMap<Set<String>, Integer>();
+
+	public DataSet(String fileName, boolean hasTitle) {
 		String dLine;
 		try {
 			FileInputStream fstream = new FileInputStream(fileName);
 			DataInputStream in = new DataInputStream(fstream);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in));
-			String title=br.readLine();
-			titleAttrs=title.split(",");
+			String title = br.readLine();
+			if (hasTitle)
+				titleAttrs = title.split(",");
+			else
+				dRows.add(new Transaction(title.split(",")));
 			while ((dLine = br.readLine()) != null) {
-				//System.out.println(dLine);
-				String values[]=dLine.split(",");
-				//dRows.add();
+				Transaction tr;
+				if (hasTitle)
+					tr = new Transaction(dLine.split(","), titleAttrs);
+				else
+					tr = new Transaction(dLine.split(","));
+				dRows.add(tr);
 			}
 			in.close();
 		} catch (Exception e) {
-			System.err.println("Error: " + e.getMessage());
+			e.printStackTrace();
 		}
+	}
 
+	LinkedList<Transaction> getTranscations() {
+		return dRows;
+	}
+
+	public int size() {
+		return dRows.size();
+	}
+
+	public int getSupport(ItemSet is) {
+		if (this.support.get(is.items) == null) {
+			int support = 0;
+			for (Transaction t : this.dRows) {
+
+				if (t.containsAll(is.items))
+					support++;
+			}
+			this.support.put(is.items, support);
+			return (support);
+		}
+		return this.support.get(is.items);
 	}
 }
