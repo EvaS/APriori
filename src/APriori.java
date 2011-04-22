@@ -27,7 +27,7 @@ public class APriori {
 		HashMap<String, Integer> singles = new HashMap<String, Integer>();
 		HashMap<ItemSet, Integer> itemsL1 = new HashMap<ItemSet, Integer>();
 
-		LinkedList<Transaction> transactions = this.dataset.getTranscations();
+		LinkedList<Transaction> transactions = this.dataset.getTransactions();
 		for (Transaction t : transactions) {
 			for (String item : t.items) {
 				if (singles.containsKey(item)) {
@@ -120,8 +120,7 @@ public class APriori {
 						ii.put(s, s2);
 						if (!this.confident.containsKey(conf)) {
 							this.confident
-									.put(
-											conf,
+									.put(conf,
 											new LinkedList<HashMap<ItemSet, ItemSet>>());
 						}
 						this.confident.get(conf).add(ii);
@@ -139,7 +138,8 @@ public class APriori {
 		try {
 			fstream = new FileWriter(this.FILENAME);
 			out = new BufferedWriter(fstream);
-			out.write("==Large itemsets (min_sup:" + this.minSupp * 100 + "%)\n");
+			out.write("==Large itemsets (min_sup:" + this.minSupp * 100
+					+ "%)\n");
 			for (Double supp : frequent.descendingKeySet()) {
 				LinkedList<ItemSet> lis = frequent.get(supp);
 				for (ItemSet is : lis) {
@@ -147,19 +147,22 @@ public class APriori {
 					out.write(supp * 100 + " % \n");
 				}
 			}
-			out.write("\n==High-confidence association rules (min_conf:" + this.minConf
-					* 100 + "%)\n");
+			out.write("\n==High-confidence association rules (min_conf:"
+					+ this.minConf * 100 + "%)\n");
 			for (Double conf : this.confident.keySet()) {
 				for (HashMap<ItemSet, ItemSet> ii : this.confident.get(conf)) {
 					for (ItemSet s1 : ii.keySet()) {
-						ItemSet s=new ItemSet(new LinkedList<String>(s1.items));
+						ItemSet s = new ItemSet(
+								new LinkedList<String>(s1.items));
 						this.writeItemSet(s1, out);
 						out.write("=>");
-						ItemSet s2=ii.get(s1);
+						ItemSet s2 = ii.get(s1);
 						this.writeItemSet(s2, out);
 						s.items.addAll(s2.items);
-						double supp=this.dataset.getSupport(s)/(dataset.size()*1.0);
-						out.write("(Conf:" + conf * 100 + "%, Supp:"+supp*100 + "%)\n");
+						double supp = this.dataset.getSupport(s)
+								/ (dataset.size() * 1.0);
+						out.write("(Conf:" + conf * 100 + "%, Supp:" + supp
+								* 100 + "%)\n");
 					}
 				}
 			}
@@ -205,14 +208,17 @@ public class APriori {
 
 	/*
 	 * Main class calling a-priori algorithm
+	 * Usage:
+	 * $java APriori <datafile> <min_support> <min_confidence>
 	 */
+	
 	public static void main(String args[]) {
 		APriori apriori;
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		try {
 			System.out.print("Enter name of dataset file: ");
-			String fileName = br.readLine();
-			DataSet d = new DataSet(fileName,true);
+			String fileName = br.readLine().trim();
+			DataSet d = new DataSet(fileName, true);
 
 			double minSupp, minConf;
 
@@ -231,6 +237,22 @@ public class APriori {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		// for final submission
+		/*
+		if (args.length >= 3) {
+
+			String fileName = args[0];
+			double minSupp, minConf;
+			minSupp = Double.parseDouble(args[1]);
+			minConf = Double.parseDouble(args[2]);
+
+			DataSet d = new DataSet(fileName, true);
+			apriori = new APriori(d, minSupp, minConf);
+			apriori.mineFreqSets();
+			apriori.generateRules();
+			apriori.outputRules();
+		}*/
 	}
 
 }
