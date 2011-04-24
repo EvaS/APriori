@@ -13,7 +13,7 @@ public class APriori {
 	private double minSupp;
 	private double minConf;
 	TreeMap<Double, LinkedList<ItemSet>> frequent = new TreeMap<Double, LinkedList<ItemSet>>();
-	TreeMap<Double, LinkedList<HashMap<ItemSet, ItemSet>>> confident = new TreeMap<Double, LinkedList<HashMap<ItemSet, ItemSet>>>();
+	TreeMap<Double, HashMap<ItemSet, ItemSet>> confident = new TreeMap<Double, HashMap<ItemSet, ItemSet>>();
 	private String FILENAME = "output.txt";
 
 	public APriori(DataSet d, double minSupp, double minConf) {
@@ -24,6 +24,7 @@ public class APriori {
 
 	public HashMap<ItemSet, Integer> generateL1() {
 
+		// each individual item with its corresponding frequency
 		HashMap<String, Integer> singles = new HashMap<String, Integer>();
 		HashMap<ItemSet, Integer> itemsL1 = new HashMap<ItemSet, Integer>();
 
@@ -38,13 +39,12 @@ public class APriori {
 			}
 		}
 		for (String s : singles.keySet()) {
-			double supp = (singles.get(s) / (dataset.size() * 1.0));
-			if ((singles.get(s) / (dataset.size() * 1.0)) >= this.minSupp) {
+			double supp = singles.get(s) / (dataset.size() * 1.0);
+			if (supp >= this.minSupp) {
 
 				LinkedList<String> tl = new LinkedList<String>();
 				tl.add(s);
 				ItemSet is = new ItemSet(tl);
-
 				itemsL1.put(is, singles.get(s));
 				LinkedList<ItemSet> items = frequent.get(supp);
 				if (items != null) {
@@ -61,27 +61,29 @@ public class APriori {
 	}
 
 	public void mineFreqSets() {
+		// initial itemset
 		HashMap<ItemSet, Integer> lk;
+		// for intersection between itemsets
 		LinkedList<ItemSet> c1, c2;
 		lk = this.generateL1();
 
 		while (!lk.isEmpty()) {
 			c1 = new LinkedList<ItemSet>();
 			c2 = new LinkedList<ItemSet>();
+
 			c1.addAll(lk.keySet());
 			c2.addAll(lk.keySet());
+			// reinitialize lk for k+1 round
 			lk = new HashMap<ItemSet, Integer>();
 			for (ItemSet i1 : c1) {
 				for (ItemSet i2 : c2) {
-
 					if (i1.intersectsOne(i2)) {
 						LinkedList<String> tl = new LinkedList<String>();
 						tl.addAll(i1.items);
 						tl.addAll(i2.items);
 						ItemSet c = new ItemSet(tl);
 						int support = this.dataset.getSupport(c);
-
-						double suppcent = (support / (dataset.size() * 1.0));
+						double suppcent = support / (dataset.size() * 1.0);
 						if (suppcent >= this.minSupp) {
 							lk.put(c, support);
 							LinkedList<ItemSet> items = frequent.get(suppcent);
@@ -90,8 +92,7 @@ public class APriori {
 							} else {
 								items = new LinkedList<ItemSet>();
 								items.add(c);
-								frequent.put(support / (dataset.size() * 1.0),
-										items);
+								frequent.put(suppcent, items);
 							}
 						}
 					}
@@ -101,29 +102,76 @@ public class APriori {
 
 	}
 
+	public void mineFrequentItemSets() {
+		// initial item sets
+		HashMap<ItemSet, Integer> itemsMap;
+		// for intersection between item sets
+		LinkedList<ItemSet> preCand = new LinkedList<ItemSet>();
+		itemsMap = this.generateL1();
+
+		while (!itemsMap.isEmpty()) {
+			preCand.clear();
+			preCand.addAll(itemsMap.keySet());
+			// get the size of all previous candidates
+			int length = preCand.size();
+			// reinitialize itemsMap for next round
+			itemsMap = new HashMap<ItemSet, Integer>();
+			for (int i = 0; i < length; i++) {
+				for (int j = i + 1; j < length; j++) {
+					ItemSet i1 = preCand.get(i);
+					ItemSet i2 = preCand.get(j);
+					String next = i1.nextString(i2);
+
+					if (next != null) {
+						LinkedList<String> tl = new LinkedList<String>();
+						tl.addAll(i1.items);
+						tl.add(next);
+						ItemSet c = new ItemSet(tl);
+						int support = this.dataset.getSupport(c);
+						double suppcent = support / (dataset.size() * 1.0);
+						if (suppcent >= this.minSupp) {
+							itemsMap.put(c, support);
+							LinkedList<ItemSet> items = frequent.get(suppcent);
+							if (items != null) {
+								items.add(c);
+							} else {
+								items = new LinkedList<ItemSet>();
+								items.add(c);
+								frequent.put(suppcent, items);
+							}
+						}
+					}
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * R: l => r ; l,r E T
+	 */
 	public void generateRules() {
 
 		for (Double supp : frequent.descendingKeySet()) {
 			LinkedList<ItemSet> lis = frequent.get(supp);
 			for (ItemSet is : lis) {
 				for (int i = 1; i <= Math.pow(2, is.items.size()); i++) {
-					ItemSet s = new ItemSet(i, is);
-					ItemSet s2 = new ItemSet(~i, is);
-					if (s.items.isEmpty() || s2.items.isEmpty())
+					// LHS
+					ItemSet l = new ItemSet(i, is);
+					// RHS
+					ItemSet r = new ItemSet(~i, is);
+					if (l.items.isEmpty() || r.items.isEmpty())
 						continue;
-					int supp1 = this.dataset.getSupport(is);
-					int supp2 = this.dataset.getSupport(s);
+					int suppLR = this.dataset.getSupport(is);
+					int suppL = this.dataset.getSupport(l);
 
-					Double conf = supp1 / (1.0 * supp2);
+					Double conf = suppLR / (1.0 * suppL);
 					if (conf >= this.minConf) {
-						HashMap<ItemSet, ItemSet> ii = new HashMap<ItemSet, ItemSet>();
-						ii.put(s, s2);
 						if (!this.confident.containsKey(conf)) {
-							this.confident
-									.put(conf,
-											new LinkedList<HashMap<ItemSet, ItemSet>>());
+							this.confident.put(conf,
+									new HashMap<ItemSet, ItemSet>());
 						}
-						this.confident.get(conf).add(ii);
+						this.confident.get(conf).put(l, r);
 					}
 				}
 			}
@@ -150,22 +198,20 @@ public class APriori {
 			out.write("\n==High-confidence association rules (min_conf:"
 					+ this.minConf * 100 + "%)\n");
 			for (Double conf : this.confident.keySet()) {
-				for (HashMap<ItemSet, ItemSet> ii : this.confident.get(conf)) {
-					for (ItemSet s1 : ii.keySet()) {
+				for (ItemSet is : this.confident.get(conf).keySet()) {
 						ItemSet s = new ItemSet(
-								new LinkedList<String>(s1.items));
-						this.writeItemSet(s1, out);
+								new LinkedList<String>(is.items));
+						this.writeItemSet(is, out);
 						out.write("=>");
-						ItemSet s2 = ii.get(s1);
-						this.writeItemSet(s2, out);
-						s.items.addAll(s2.items);
+						ItemSet r = this.confident.get(conf).get(is);
+						this.writeItemSet(r, out);
+						s.items.addAll(r.items);
 						double supp = this.dataset.getSupport(s)
 								/ (dataset.size() * 1.0);
 						out.write("(Conf:" + conf * 100 + "%, Supp:" + supp
 								* 100 + "%)\n");
 					}
 				}
-			}
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -207,11 +253,10 @@ public class APriori {
 	}
 
 	/*
-	 * Main class calling a-priori algorithm
-	 * Usage:
-	 * $java APriori <datafile> <min_support> <min_confidence>
+	 * Main class calling a-priori algorithm Usage: $java APriori <datafile>
+	 * <min_support> <min_confidence>
 	 */
-	
+
 	public static void main(String args[]) {
 		APriori apriori;
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -237,22 +282,18 @@ public class APriori {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		// for final submission
 		/*
-		if (args.length >= 3) {
-
-			String fileName = args[0];
-			double minSupp, minConf;
-			minSupp = Double.parseDouble(args[1]);
-			minConf = Double.parseDouble(args[2]);
-
-			DataSet d = new DataSet(fileName, true);
-			apriori = new APriori(d, minSupp, minConf);
-			apriori.mineFreqSets();
-			apriori.generateRules();
-			apriori.outputRules();
-		}*/
+		 * if (args.length >= 3) {
+		 * 
+		 * String fileName = args[0]; double minSupp, minConf; minSupp =
+		 * Double.parseDouble(args[1]); minConf = Double.parseDouble(args[2]);
+		 * 
+		 * DataSet d = new DataSet(fileName, true); apriori = new APriori(d,
+		 * minSupp, minConf); apriori.mineFreqSets(); apriori.generateRules();
+		 * apriori.outputRules(); }
+		 */
 	}
 
 }

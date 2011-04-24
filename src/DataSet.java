@@ -9,7 +9,9 @@ import java.util.Set;
 public class DataSet {
 
 	String titleAttrs[];
+	// list of all transactions objects
 	LinkedList<Transaction> dRows = new LinkedList<Transaction>();
+	// map of <itemSet, support> 
 	HashMap<Set<String>, Integer> support = new HashMap<Set<String>, Integer>();
 
 	public DataSet(String fileName, boolean hasTitle) {

@@ -45,4 +45,27 @@ public class ItemSet {
 		return false;
 	}
 
+	public String nextString(ItemSet is) {
+
+		Iterator<String> iterX = this.items.iterator();
+		Iterator<String> iterY = is.items.iterator();
+		int lenX = this.items.size();
+		int lenY = is.items.size();
+
+		if (lenX != lenY) {
+			return null;
+		} else {
+			while (lenX > 1) {
+				if (iterX.next() != iterY.next()) {
+					return null;
+				}
+				lenX--;
+			}
+			String x = iterX.next();
+			String y = iterY.next();
+			if (x.compareTo(y) < 0)
+				return y;
+		}
+		return null;
+	}
 }
