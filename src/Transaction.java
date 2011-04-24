@@ -6,9 +6,9 @@ public class Transaction {
 	LinkedList<String> items = new LinkedList<String>();
 
 	public Transaction(String itemArr[], String titleAttrs[]) {
-		// separator can be "$$" as "." is very common in words
+		// separator "$$" as "." is very common in words
 		for (int i = 0; i < itemArr.length; i++) {
-			items.add(new String(titleAttrs[i] + "." + itemArr[i]));
+			items.add(new String(titleAttrs[i] + " $$ " + itemArr[i]));
 		}
 	}
 

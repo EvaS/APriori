@@ -4,13 +4,14 @@ import java.util.TreeSet;
 
 public class ItemSet {
 
+	// ItemSet is sorted according to the String items
 	TreeSet<String> items = new TreeSet<String>();
 
 	public ItemSet(LinkedList<String> items) {
 		this.items.addAll(items);
 	}
 
-	public ItemSet(int bitmap, ItemSet is) {
+	public ItemSet(long bitmap, ItemSet is) {
 		Object itemsp[] = is.items.toArray();
 		for (int j = 0; j < is.items.size(); j++) {
 			if ((bitmap & ((int) Math.pow(2, j))) != 0) {
