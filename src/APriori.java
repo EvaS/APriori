@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -66,6 +67,9 @@ public class APriori {
 		return itemsL1;
 	}
 
+	/**
+	 * @author - eva
+	 */
 	public void mineFreqSets() {
 		// initial itemset
 		Map<ItemSet, Integer> lk;
@@ -106,6 +110,10 @@ public class APriori {
 			}
 		}
 	}
+
+	/**
+	 * @author : aman
+	 */
 
 	public void mineFrequentItemSets() {
 		// initial item sets
@@ -185,22 +193,24 @@ public class APriori {
 	public void outputRules() {
 
 		FileWriter fstream;
-		BufferedWriter out;
+		BufferedWriter br;
+		PrintWriter out;
 		try {
 			fstream = new FileWriter(this.FILENAME);
-			out = new BufferedWriter(fstream);
+			br = new BufferedWriter(fstream);
+			out = new PrintWriter(br);
 			out.write("==Large itemsets (min_sup:" + this.minSupp * 100
 					+ "%)\n");
 			for (Double supp : frequent.descendingKeySet()) {
 				LinkedList<ItemSet> lis = frequent.get(supp);
 				for (ItemSet is : lis) {
 					this.writeItemSet(is, out);
-					out.write(supp * 100 + " % \n");
+					out.printf("%.2f %% \n", supp * 100);
 				}
 			}
 			out.write("\n==High-confidence association rules (min_conf:"
 					+ this.minConf * 100 + "%)\n");
-			for (Double conf : this.confident.keySet()) {
+			for (Double conf : this.confident.descendingKeySet()) {
 				for (ItemSet l : this.confident.get(conf).keySet()) {
 					// LHS
 					this.writeItemSet(l, out);
@@ -213,11 +223,13 @@ public class APriori {
 					is.items.addAll(r.items);
 					double supp = this.dataset.getSupport(is)
 							/ (dataset.size() * 1.0);
-					out.write("(Conf:" + conf * 100 + "%, Supp:" + supp * 100
-							+ "%)\n");
+					out.printf("Conf: %.2f %% , Supp: %.2f %% \n", conf * 100,
+							supp * 100);
 				}
 			}
 			out.close();
+			System.out
+					.println("Output written to disk, check output.txt file :)");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -240,18 +252,14 @@ public class APriori {
 	/**
 	 * Writes an itemset to file
 	 */
-	public void writeItemSet(ItemSet is, BufferedWriter out) {
-		try {
-			out.write("[");
-			for (String s : is.items) {
-				out.write(s);
-				if (!s.equals(is.items.last()))
-					out.write(", ");
-			}
-			out.write("] ");
-		} catch (IOException e) {
-			e.printStackTrace();
+	public void writeItemSet(ItemSet is, PrintWriter out) {
+		out.write("[");
+		for (String s : is.items) {
+			out.write(s);
+			if (!s.equals(is.items.last()))
+				out.write(", ");
 		}
+		out.write("] ");
 	}
 
 	/*
@@ -265,7 +273,7 @@ public class APriori {
 		try {
 			System.out.print("Enter name of dataset file: ");
 			String fileName = br.readLine().trim();
-			DataSet d = new DataSet(fileName, false);
+			DataSet d = new DataSet(fileName, true);
 
 			double minSupp, minConf;
 
