@@ -172,13 +172,15 @@ public class APriori {
 					ItemSet l = new ItemSet(i, is);
 					// RHS
 					ItemSet r = new ItemSet(~i, is);
-					if (l.items.isEmpty() || r.items.isEmpty())
+				
+					//Compute only rules where the right side has one item
+					if (l.items.isEmpty()|| r.items.size()>1 || r.items.isEmpty())
 						continue;
 					int suppLR = this.dataset.getSupport(is);
 					int suppL = this.dataset.getSupport(l);
 
 					Double conf = suppLR / (1.0 * suppL);
-					if (conf >= this.minConf) {
+					if (conf >= this.minConf ) {
 						if (!this.confident.containsKey(conf)) {
 							this.confident.put(conf,
 									new HashMap<ItemSet, ItemSet>());
