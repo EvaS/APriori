@@ -172,9 +172,10 @@ public class APriori {
 					ItemSet l = new ItemSet(i, is);
 					// RHS
 					ItemSet r = new ItemSet(~i, is);
-				
-					//Compute only rules where the right side has one item
-					if (l.items.isEmpty()|| r.items.size()>1 || r.items.isEmpty())
+					
+					// Generate rules with RHS having one item
+					if (l.items.isEmpty() || r.items.isEmpty()
+							|| r.items.size() > 1)
 						continue;
 					int suppLR = this.dataset.getSupport(is);
 					int suppL = this.dataset.getSupport(l);
