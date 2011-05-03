@@ -16,7 +16,7 @@ public class DataSet {
 
 	public DataSet(String fileName, boolean hasTitle) {
 		String dLine;
-		String LOCALROOT = "./res/";
+		String LOCALROOT = "./911_cleaned/";
 		try {
 			FileInputStream fstream = new FileInputStream(LOCALROOT + fileName);
 			DataInputStream in = new DataInputStream(fstream);

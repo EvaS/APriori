@@ -1,0 +1,78 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.7cm,nohead]{geometry}
+\usepackage{url}
+\usepackage{graphicx}
+
+\title{Project 2 \\ Advanced Database Systems \\}
+
+\author{
+Amandeep Singh\\as3947@columbia.edu
+\and
+Evangelia Sitaridi \\ es2996@cs.columbia.edu
+}
+
+\date{\today}
+
+
+\begin{document}
+\maketitle
+
+
+\section{Dataset Description}
+
+\section{Preprocessing}
+
+\section{Results}
+
+During our data analysis we faced the problem of many complex rules 
+Below we analyze the most interesting associations in the selected dataset. Apart from 
+
+Support 10\% Confidence 90\%
+\textit{Rule 1}
+["HEARING" = "No", "INCOME_SLAB" = "\$150000 or More", "SMOKER_ST" = "Never smoked"] =>["EDUCATION" = "College +"] Conf: 95.28 \% , Supp: 10.11 \%
+
+This rules associates education of the participants to income, smoking and hearing condition after 911 events. It relates 
+
+\textit{Rule 2}
+["BREATH" = "No", "EMPLOYED_911" = "Yes", "GENDER" = "Male", "HEARING" = "No", "INCOME_SLAB" = "\$150000 or More"] =>["CENSUS_RACE" = "White (non Hispanic)"] Conf: 91.96 \% , Supp: 10.31 \% 
+
+Support 40\%
+\textit{Rule 3}
+["CENSUS_RACE"="White (non Hispanic)", "GENDER"="Male"] =>["EMPLOYED_911"="Yes"] Conf: 92.63\% , Supp: 46.55\% 
+
+
+\textit{Rule 3}
+
+
+\section{Implementation}
+
+   
+\section* {Appendix}
+
+\subsection* {File Listing}
+
+We list below the files included in our submission. The compressed file contains the following sub-folders: [dataset,src].
+
+The files are:
+\begin{itemize}
+\item README.pdf
+\item src/APriori.java
+\item src/ItemSet.java
+\item src/DataSet.java
+\item src/Transaction.java
+\item src/Makefile
+\item dataset/INTEGRATED-DATASET.csv
+\item output_4f.txt
+\item top\_output\_4f.txt
+\end{itemize}
+
+\subsection* {Compilation}
+\begin{itemize}
+\item \textbf{Compile}: make
+\item \textbf{Clean-up}: make clean (removes .class files and output files)
+\item\textbf{Execute}: java APriori  $min\_supp$ $min\_conf$ (from src directory)
+
+\end{itemize}
+
+
+\end{document}
