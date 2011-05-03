@@ -1,10 +1,7 @@
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -128,7 +125,7 @@ public class APriori {
 			// get the size of all previous candidates
 			int length = preCand.size();
 			// reinitialize itemsMap for next round
-			itemsMap = new HashMap<ItemSet, Integer>();
+			itemsMap = new LinkedHashMap<ItemSet, Integer>();
 			for (int i = 0; i < length; i++) {
 				for (int j = i + 1; j < length; j++) {
 					ItemSet i1 = preCand.get(i);
@@ -172,7 +169,7 @@ public class APriori {
 					ItemSet l = new ItemSet(i, is);
 					// RHS
 					ItemSet r = new ItemSet(~i, is);
-					
+
 					// Generate rules with RHS having one item
 					if (l.items.isEmpty() || r.items.isEmpty()
 							|| r.items.size() > 1)
@@ -181,7 +178,7 @@ public class APriori {
 					int suppL = this.dataset.getSupport(l);
 
 					Double conf = suppLR / (1.0 * suppL);
-					if (conf >= this.minConf ) {
+					if (conf >= this.minConf) {
 						if (!this.confident.containsKey(conf)) {
 							this.confident.put(conf,
 									new HashMap<ItemSet, ItemSet>());
@@ -238,11 +235,56 @@ public class APriori {
 		}
 	}
 
+	public void outputTopRules() {
+
+		FileWriter fstream;
+		BufferedWriter br;
+		PrintWriter out;
+		HashMap<String, Integer> cntRules = new HashMap<String, Integer>();
+		try {
+			fstream = new FileWriter("top_" + this.FILENAME);
+			br = new BufferedWriter(fstream);
+			out = new PrintWriter(br);
+
+			out.write("==High-confidence association rules (min_conf:"
+					+ this.minConf * 100 + "%)\n");
+			for (Double conf : this.confident.descendingKeySet()) {
+				for (ItemSet l : this.confident.get(conf).keySet()) {
+					ItemSet r = this.confident.get(conf).get(l);
+					String conc=r.items.first();
+					if (cntRules.containsKey(conc)) {
+						int p=cntRules.get(conc);
+						if(p>=5)
+							continue;
+						cntRules.put(conc, p+1);
+					} else {
+						cntRules.put(conc, 1);
+					}
+					
+					// LHS
+					this.writeItemSet(l, out);
+					out.write("=>");
+					// RHS
+					this.writeItemSet(r, out);
+					// LHS U RHS
+					ItemSet is = new ItemSet(new LinkedList<String>(l.items));
+					is.items.addAll(r.items);
+					double supp = this.dataset.getSupport(is)
+							/ (dataset.size() * 1.0);
+					out.printf("Conf: %.2f %% , Supp: %.2f %% \n", conf * 100,
+							supp * 100);
+				}
+			}
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * Prints an itemset
 	 */
 	public void printItemSet(ItemSet is) {
-
 		System.out.println("[");
 		for (String s : is.items) {
 			System.out.println(s);
@@ -272,41 +314,29 @@ public class APriori {
 
 	public static void main(String args[]) {
 		APriori apriori;
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		try {
-			System.out.print("Enter name of dataset file: ");
-			String fileName = br.readLine().trim();
-			DataSet d = new DataSet(fileName, true);
 
-			double minSupp, minConf;
-
-			System.out.print("Enter minimum support: ");
-			minSupp = Double.parseDouble(br.readLine());
-
-			System.out.print("Enter minimum confidence: ");
-			minConf = Double.parseDouble(br.readLine());
-
-			apriori = new APriori(d, minSupp, minConf);
-
-			// apriori.mineFreqSets();
-			apriori.mineFrequentItemSets();
-			apriori.generateRules();
-			apriori.outputRules();
-
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(args.length<3){
+			System.err.println("Wrong number of arguments!");
+			System.err.println("Usage: DATASET min_sup min_conf");
+			System.exit(-1);
 		}
+		
+		String fileName = args[0];
+		// Second boolean argument because we have titled dataset
+		DataSet d = new DataSet(fileName, true);
 
-		// for final submission
-		/*
-		 * if (args.length >= 3) {
-		 * 
-		 * String fileName = args[0]; double minSupp, minConf; minSupp =
-		 * Double.parseDouble(args[1]); minConf = Double.parseDouble(args[2]);
-		 * 
-		 * DataSet d = new DataSet(fileName, true); apriori = new APriori(d,
-		 * minSupp, minConf); apriori.mineFreqSets(); apriori.generateRules();
-		 * apriori.outputRules(); }
-		 */
+		double minSupp, minConf;
+
+		minSupp = Double.parseDouble(args[1]);
+		minConf = Double.parseDouble(args[2]);
+
+		apriori = new APriori(d, minSupp, minConf);
+
+		// apriori.mineFreqSets();
+		apriori.mineFrequentItemSets();
+		apriori.generateRules();
+		apriori.outputRules();
+		apriori.outputTopRules();
+
 	}
 }
