@@ -20,69 +20,69 @@ Evangelia Sitaridi \\ es2996@cs.columbia.edu
 
 
 \section{Dataset}
-This dataset \cite{911d} describes the data of interviews of World Trade Center 911 workers. We found it very interesting since it combined various demographic attributes and attributes
-describing the consequences from the events of 911. The attributes of the dataset are described in table \ref{911t} and their name in their initial dataset is in parentheses.
+This dataset \cite{911d} describes the data of interviews of World Trade Center 911 workers. We found it interesting since it combined demographic attributes and attributes
+describing a variety of consequences from the events of 911. We  were interested to analyze the physical and mental conditions of people after this event. The columns of the dataset are described in table \ref{911t} and their name in their initial dataset is in parentheses.
 
 \begin{table}
 \begin{tabular}{|l|l|p{5cm}|}
 \hline
 VARIABLE\_NAME & VARIABLE\_LABEL & QUESTION ASKED? \\
 \hline
-GENDER & Gender & What is the enrollee's sex? \\
+GENDER (gender) & Gender & What is the enrollee's sex? \\
 \hline
-EMPLOYED\_911 &
+EMPLOYED\_911 (employed\_911) &
 Employment Status on 9/11/01 &
 Was the enrollee employed on 9/11/01?\\
 \hline
-SMOKER\_ST &
+SMOKER\_ST (smkstatus\_b) &
 Smoking Status &
 What was the smoking status of the enrollee at the time of interview?\\
 \hline
-COUGH &
+COUGH (cough\_nw)&
 New or Worsening Cough &
 Did the enrollee report new onset or worsening of a persistent cough since 9/11/01?\\
 \hline
-DEPRESSION &
+DEPRESSION (depression\_nw) &
 New or Worsening Depression &
 Did the enrollee report new onset or worsening depression, anxiety, or other emotional problems since 9/11/01?\\
 \hline
-HEADACHE &
+HEADACHE (headache\_nw) &
 New or Worsening Headache &
 Did the enrollee report new onset or worsening frequent, severe headaches since 9/11/01?\\
 \hline
-BREATH &
+BREATH (breath\_nw) &
 New or Worsening Shortness of Breath &
 Did the enrollee report new onset or worsening of shortness of breath since 9/11/01?\\
 \hline
-SKIN &
+SKIN (skin\_nw) &
 New or Worsening Skin Problems &
 Did the enrollee report new onset or worsening of skin rash/irritation since 9/11/01?\\
 \hline
-THROAT &
+THROAT (throat\_nw) &
 New or Worsening Throat Irritation &
 Did the enrollee report new onset or worsening of throat irritation since 9/11/01?\\
 \hline
-DUST &
+DUST (dust) &
 Dust &
 Did the enrollee indicate that he/she was outdoors on 9/11/01 within the dust or debris cloud resulting from the collapse of the World Trade Center?\\
 \hline
-EDUCATION &
+EDUCATION(educ) &
 Education Level &
 What was the highest grade or year of school completed by the enrollee at the time of interview?\\
 \hline
-INCOME\_SLAB &
+INCOME\_SLAB(income\_interview ) &
 Household Income &
 What was the enrollee's total household income in 2002 before taxes?\\
 \hline
-AGE\_GROUP &
+AGE\_GROUP(age\_911grp) &
 Age Group on 9/11/01 &
 What was the enrollee's age on 9/11/01?\\
 \hline
-CENSUS\_RACE &
+CENSUS\_RACE(census\_race) &
 Race/Ethnicity &
 What is the enrollee's combined race/ethnicity?\\
 \hline
-MARITAL\_STATUS &
+MARITAL\_STATUS(mar\_status) &
 Marital\ Status &
 What was the enrollee's marital status at the time of interview?\\
 \hline
@@ -93,20 +93,18 @@ What was the enrollee's marital status at the time of interview?\\
 
 \section{Data Preprocessing}
 
-The initial dataset [1] contained 71427 rows and more than fifty columns. Thus the initial size was too large both in terms of rows and column number. To reduce the execution time of the program and facilitate the testing of our code we did the following modifications:
+The initial dataset [1] contained 71427 rows and more than fifty columns. Thus the initial size was too large both in terms of rows' and columns' number. To reduce the execution time of the program and facilitate the testing of our code we did the following modifications:
 \begin{enumerate}
    \item keep the first 1000 rows of dataset
    \item select 17 columns we found most interesting, and are the ones described later. We first removed the columns that had mostly NULL values. Some of the columns were removed after      experimentation since they did not add to the results.
-   \item due to a problem in the format of the initial dataset the value of the participants' income was represented using comma, e.g.
-   \item attibute renamed to more intuitive ones
-25,000 instead of 25.000. This confused our program since it regarded as an extra column. That is why we replaced each  \textit{,000} with string  \textit{000}.
+   \item due to a problem in the format of the initial dataset the value of the participants' income was represented using comma, e.g. 25,000 instead of 25.000. This confused our program since it regarded as an extra column. That is why we replaced each  \textit{,000} ocurrence with string  \textit{000}.
+   \item attibutes were renamed to more intuitive ones
 \end{enumerate}
 Finally, the quotes around the value of each column were added by OpenOffice SpreadSheet program but we let them since we did not feel they affected the legibility of the results.
 
 \section{Implementation}
 
-The dataset is stored in the DataSet class object, each row in the dataset is defined as a Transaction class object. If a dataset has a title in the first line, we add as an item value
-the name of the attribues concatenated with the value of the attribute.
+The dataset is stored in the DataSet class object, each row in the dataset is defined as a Transaction class object. If a dataset has a title in the first line, we set the item's value as the name of the attribute concatenated with the value of the attribute. Also, if a Dataset does not have a title then the second parameter of Dataset's constructor in the main class should be \textbf{set to FALSE}.
 
 \begin{verbatim}
 Algorithm:
@@ -142,7 +140,7 @@ GenerateL1()
             itemsL1 // add a new ItemSet(singles)
 \end{verbatim}
 
-Subsequent rounds of Apriori uses this base itemsL1, new string is added into the item set using nextString(ItemSet) method.
+Subsequent rounds of Apriori use this base itemsL1, new string is added into the item set using nextString(ItemSet) method.
 
 \begin{verbatim}
 nextString(ItemSet i1, ItemSet i2)
@@ -163,11 +161,10 @@ nextString(ItemSet i1, ItemSet i2)
     return null
 \end{verbatim}
 
-
+The support of the itemsets are cached so it is not computed multiple times.
 \section{Results}
 
-During our data analysis we faced the problem of many complex rules  so apart from saving the frequent item-sets and rules we create an extra file: top\_output.txt which contains only
-top five-rules for each possible conclusion.  Below we analyze the most interesting associations in the selected dataset.
+During our data analysis we faced the problem of many complex rules  so apart from saving the frequent item-sets and rules we create an extra file: top\_output.txt containing only top five-rules for each possible conclusion. For the second setting we only add file containing only the top rules since due to the low support we had set it included many itemsets. Below we analyze the most interesting associations present in the dataset.
 
 \textbf{Support 10\% Confidence 60\%}
 
@@ -250,43 +247,64 @@ Remembering Rule 6 adding headache condition the chance for a person to be depre
 
 \textit{Rule 12}
 
-["AGE\_GROUP"="25-44 years", "INCOME\_SLAB"="\$25000 to less than \$75000"] $=>$["MARITAL\_STATUS"="Not Married"] Conf: 52.73\% , Supp: 5.81\% 
+["AGE\_GROUP"="25-44 years", "INCOME\_SLAB"="\$25000 to less than \$75000"] \\
+$=>$["MARITAL\_STATUS"="Not Married"] Conf: 52.73\% , Supp: 5.81\% 
 
-This rules gives us again information on the demographic profile of the participants. Participants aged 25-44 having average income is more likely
+This rules gives us again information on the demographic profile of the participants. Participants aged 25-44 having low income is more likely
 not to be married.\\
 
 \textit{Rule 13}
 
 ["DEPRESSION"="No", "INCOME\_SLAB"="\$150000 or More", "MARITAL\_STATUS"="Married", "SMOKER\_ST"="Never smoked"] \\
-$=>$["EDUCATION"="College +"] Conf: 100.00\% , Supp: 5.11\% 
-
+$=>$["EDUCATION"="College +"] Conf: 100.00\% , Supp: 5.11\%  \\
 
 \textit{Rule 14}
+
 Top Reasons for depression:
 
-["BREATH"="Yes", "HEADACHE"="Yes", "THROAT"="Yes"] =>["DEPRESSION"="Yes"] Conf: 83.87\% , Supp: 5.21\% 
-["CENSUS_RACE"="White (non Hispanic)", "EMPLOYED_911"="Yes", "GENDER"="Female", "THROAT"="Yes"] =>["DEPRESSION"="Yes"] Conf: 82.86\% , Supp: 5.81\% 
-["SKIN"="Yes", "THROAT"="Yes"] =>["DEPRESSION"="Yes"] Conf: 82.35\% , Supp: 5.61\% 
-["BREATH"="Yes", "EMPLOYED_911"="Yes", "HEADACHE"="Yes"] =>["DEPRESSION"="Yes"] Conf: 82.05\% , Supp: 6.41\% 
-["CENSUS_RACE"="White (non Hispanic)", "GENDER"="Female", "THROAT"="Yes"] =>["DEPRESSION"="Yes"] Conf: 81.48\% , Supp: 6.61\% 
+["BREATH"="Yes", "HEADACHE"="Yes", "THROAT"="Yes"]\\
+$=>$ ["DEPRESSION"="Yes"] Conf: 83.87\% , Supp: 5.21\% \\
+
+["CENSUS\_RACE"="White (non Hispanic)", "EMPLOYED\_911"="Yes", "GENDER"="Female", "THROAT"="Yes"] \\
+ $=>$ ["DEPRESSION"="Yes"] Conf: 82.86\% , Supp: 5.81\%   \\
+
+["SKIN"="Yes", "THROAT"="Yes"] \\
+$=>$ ["DEPRESSION"="Yes"] Conf: 82.35\% , Supp: 5.61\%   \\
+
+["BREATH"="Yes", "EMPLOYED\_911"="Yes", "HEADACHE"="Yes"] \\
+ $=>$ ["DEPRESSION"="Yes"] Conf: 82.05\% , Supp: 6.41\%  \\
+
+["CENSUS\_RACE"="White (non Hispanic)", "GENDER"="Female", "THROAT"="Yes"] \\
+  $=>$ ["DEPRESSION"="Yes"] Conf: 81.48\% , Supp: 6.61\%  \\
+
+We observe that THROAT and Gender="Female" increased the risk for a participant to experience depression.\\
+
+\textit{Rule 15}
+
+["AGE\_GROUP"="45-64 years", "BREATH"="Yes"] \\
+$=>$["INCOME\_SLAB"="\$25000 to less than \$75000"] Conf: 39.39\% , Supp: 5.21\% 
+
+We observe that middle-aged participants that suffer from shortness of breath is most likely to have low income.
+\\
+
+\textit{Rule 16}
+
+["EDUCATION"="Some College", "SKIN"="No"]\\
+$=>$["INCOME\_SLAB"="\$25000 to less than \$75000"] Conf: 38.13\% , Supp: 5.31\% 
 
 \section* {Appendix}
 
 \subsection* {File Listing}
 
-We list below the files included in our submission. The compressed file contains the following sub-folders: [dataset,src].
-
+We list below the files included in our submission. The compressed file contains the following sub-folders: [dataset, src, output].
+The name of our INTEGRATED-DATASET  is \textbf{911\_1000.csv}.
 The files are:
 \begin{itemize}
 \item README.pdf
-\item src/APriori.java
-\item src/ItemSet.java
-\item src/DataSet.java
-\item src/Transaction.java
+\item src/\{APriori.java, ItemSet.java, DataSet.java, Transaction.java\}
 \item src/Makefile
-\item dataset/INTEGRATED-DATASET.csv
-\item output/output.txt
-\item output/top\_output\_.txt
+\item src/dataset/911\_1000.csv
+\item output/\{output\_016.txt, top\_output\_005.txt,top\_output\_016.txt\}
 \end{itemize}
 
 \subsection* {Compilation}
