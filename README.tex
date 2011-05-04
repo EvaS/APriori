@@ -4,7 +4,7 @@
 \usepackage{graphicx}
 \usepackage{tabularx}
 
-\title{Project 2 \\ Advanced Database Systems \\}
+\title{Project 3 \\ Advanced Database Systems \\}
 
 \author{
 Amandeep Singh\\as3947@columbia.edu
@@ -23,12 +23,26 @@ Evangelia Sitaridi \\ es2996@cs.columbia.edu
 This dataset \cite{911d} describes the data of interviews of World Trade Center 911 workers. We found it interesting since it combined demographic attributes and attributes
 describing a variety of consequences from the events of 911. We  were interested to analyze the physical and mental conditions of people after this event. The columns of the dataset are described in table \ref{911t} and their name in their initial dataset is in parentheses.
 
+
 \begin{table}
+\caption{911 Dataset Selected Attributes}
 \begin{tabular}{|l|l|p{5cm}|}
 \hline
 VARIABLE\_NAME & VARIABLE\_LABEL & QUESTION ASKED? \\
 \hline
 GENDER (gender) & Gender & What is the enrollee's sex? \\
+\hline
+AGE\_GROUP(age\_911grp) &
+Age Group on 9/11/01 &
+What was the enrollee's age on 9/11/01?\\
+\hline
+CENSUS\_RACE(census\_race) &
+Race/Ethnicity &
+What is the enrollee's combined race/ethnicity?\\
+\hline
+MARITAL\_STATUS(mar\_status) &
+Marital\ Status &
+What was the enrollee's marital status at the time of interview?\\
 \hline
 EMPLOYED\_911 (employed\_911) &
 Employment Status on 9/11/01 &
@@ -74,26 +88,13 @@ INCOME\_SLAB(income\_interview ) &
 Household Income &
 What was the enrollee's total household income in 2002 before taxes?\\
 \hline
-AGE\_GROUP(age\_911grp) &
-Age Group on 9/11/01 &
-What was the enrollee's age on 9/11/01?\\
-\hline
-CENSUS\_RACE(census\_race) &
-Race/Ethnicity &
-What is the enrollee's combined race/ethnicity?\\
-\hline
-MARITAL\_STATUS(mar\_status) &
-Marital\ Status &
-What was the enrollee's marital status at the time of interview?\\
-\hline
 \end{tabular}
-\caption{911 Dataset Attributes}
 \label{911t}
 \end{table}
 
 \section{Data Preprocessing}
 
-The initial dataset [1] contained 71427 rows and more than fifty columns. Thus the initial size was too large both in terms of rows' and columns' number. To reduce the execution time of the program and facilitate the testing of our code we did the following modifications:
+The initial dataset [1] contained 71427 rows and 52 columns. Thus the initial size was too large both in terms of rows' and columns' number. To reduce the execution time of the program and facilitate the testing of our code we did the following modifications:
 \begin{enumerate}
    \item keep the first 1000 rows of dataset
    \item select 17 columns we found most interesting, and are the ones described later. We first removed the columns that had mostly NULL values. Some of the columns were removed after      experimentation since they did not add to the results.
@@ -106,8 +107,12 @@ Finally, the quotes around the value of each column were added by OpenOffice Spr
 
 The dataset is stored in the DataSet class object, each row in the dataset is defined as a Transaction class object. If a dataset has a title in the first line, we set the item's value as the name of the attribute concatenated with the value of the attribute. Also, if a Dataset does not have a title then the second parameter of Dataset's constructor in the main class should be \textbf{set to FALSE}.
 
+
 \begin{verbatim}
-Algorithm:
+
+
+
+Preprocessing Text Algorithm:
 
 DataSet(fileName, hasTitle)
     if(hasTitle)
@@ -164,9 +169,9 @@ nextString(ItemSet i1, ItemSet i2)
 The support of the itemsets are cached so it is not computed multiple times.
 \section{Results}
 
-During our data analysis we faced the problem of many complex rules  so apart from saving the frequent item-sets and rules we create an extra file: top\_output.txt containing only top five-rules for each possible conclusion. For the second setting we only add file containing only the top rules since due to the low support we had set it included many itemsets. Below we analyze the most interesting associations present in the dataset.
+During our data analysis we faced the problem of many complex rules  so apart from saving the frequent item-sets and rules we create an extra file: top\_output.txt containing only top five-rules for each possible conclusion. For the second setting we only add the file containing only the top rules since due to the low support we had set it included many itemsets. Below we analyze the most interesting associations present in the dataset.
 
-\textbf{Support 10\% Confidence 60\%}
+\textbf{Minimum Support:10\% Minimum Confidence: 60\%}
 
 \textit{Rule 1}
 
@@ -183,12 +188,14 @@ relatively not physically affected 911 events are educated. \\
 ["COUGH"="No", "GENDER"="Male", "INCOME\_SLAB"="\$150000 or More", "SKIN"="No"] \\
 $=>$ ["CENSUS\_RACE"="White (non Hispanic)"] Conf: 92.66 \% , Supp: 10.11 \% 
 
-Again, there is another demographic that weatlhy males were white. \\
+Again, there is another demographic relation that wealthy males were white. \\
 
 \textit{Rule 3}
 
 ["AGE\_GROUP"="25-44 years", "CENSUS\_RACE"="White (non Hispanic)", "DEPRESSION"="No", "DUST"="No"]\\
  $=>$ ["EMPLOYED\_911"="Yes"] Conf: 98.26 \% , Supp: 11.31 \%  \\
+
+Young volunteers who were white and not exposed to dust, not suffered from depression were employed during 911 events. \\
 
 \textit{Rule 4}
 
@@ -201,6 +208,7 @@ This rules correlates different conditions caused by 911 events. It seems that p
 ["AGE\_GROUP"="25-44 years", "COUGH"="No", "DEPRESSION"="No", "EDUCATION"="College +", "HEADACHE"="No", "THROAT"="No"]\\
 $=>$ ["SMOKER\_ST"="Never smoked"] Conf: 72.60\% , Supp: 10.61\%  \\
 
+Young people, who are educated and not seriously affected from the attack were most likely non-smokers.\\
 \textit{Rule 6}
 
 ["BREATH"="Yes", "THROAT"="Yes"] =$>$["DEPRESSION"="Yes"] Conf: 69.41\% , Supp: 11.81\%  \\
@@ -224,9 +232,11 @@ This rule implies that depression is more prevalent to male participants. \\
 
 ["SMOKER\_ST"="Current smoker"] =$>$["EDUCATION"="College +"] Conf: 63.92\% , Supp: 10.11\%  \\
 
-\textbf{Support 5\% Confidence 35\%}
+Most current smokers seem to be educated. \\
 
-We decided to focus on underpresented groups of participants which might be covered by the previous setting of the algorithm
+\textbf{Minimum Support: 5\% Minimum Confidence: 35\%}
+
+We decided to focus on underpresented groups of participants which might not be covered by the previous setting of the algorithm.
 
 \textit{Rule 10}
 
@@ -243,14 +253,14 @@ is slightly more common among employed women. \\
 
 ["BREATH"="Yes", "HEADACHE"="Yes", "THROAT"="Yes"] $=>$ ["DEPRESSION"="Yes"] Conf: 83.87\% , Supp: 5.21\%  \\
 
-Remembering Rule 6 adding headache condition the chance for a person to be depressed increases significantly from 69.41\% to 83.87\%. \\
+Remembering Rule 6, adding headache condition the chance for a person to be depressed increases significantly from 69.41\% to 83.87\%. \\
 
 \textit{Rule 12}
 
 ["AGE\_GROUP"="25-44 years", "INCOME\_SLAB"="\$25000 to less than \$75000"] \\
 $=>$["MARITAL\_STATUS"="Not Married"] Conf: 52.73\% , Supp: 5.81\% 
 
-This rules gives us again information on the demographic profile of the participants. Participants aged 25-44 having low income is more likely
+This rules gives us again information on the demographic profile of the participants. Participants aged 25-44, having low income are more likely
 not to be married.\\
 
 \textit{Rule 13}
@@ -292,6 +302,29 @@ We observe that middle-aged participants that suffer from shortness of breath is
 ["EDUCATION"="Some College", "SKIN"="No"]\\
 $=>$["INCOME\_SLAB"="\$25000 to less than \$75000"] Conf: 38.13\% , Supp: 5.31\% 
 
+\textbf{Minimum Support: 3\% Minimum Confidence: 60\%}
+
+\textit{Rule 17}
+
+["AGE\_GROUP"="45-64 years", "COUGH"="Yes", "DEPRESSION"="Yes", "GENDER"="Female"] \\
+$=>$ ["THROAT"="Yes"] Conf: 89.19\% , Supp: 3.30\%  \\
+
+\textit{Rule 18}
+
+["BREATH"="No", "CENSUS\_RACE"="White (non Hispanic)", "DEPRESSION"="No", "EMPLOYED\_911"="Yes", "HEADACHE"="No",
+ "INCOME\_SLAB"="\$150000 or More", "SKIN"="No", "SMOKER\_ST"="Never smoked", "THROAT"="No"] 
+ $=>$ ["EDUCATION"="College +"] Conf: 100.00\% , Supp: 3.70\%  \\
+
+\textbf{Minimum Support: 70\% Minimum Confidence: 80\%}
+
+\textit{Rule 19} 
+
+["HEADACHE"="No"] $=>$["SKIN"="No"] Conf: 90.77\% , Supp: 76.78\% \\
+
+\textit{Rule 20}
+
+["EMPLOYED\_911"="Yes"] $=>$ ["HEADACHE"="No"] Conf: 84.62\% , Supp: 75.98\%   \\
+
 \section* {Appendix}
 
 \subsection* {File Listing}
@@ -304,7 +337,9 @@ The files are:
 \item src/\{APriori.java, ItemSet.java, DataSet.java, Transaction.java\}
 \item src/Makefile
 \item src/dataset/911\_1000.csv
-\item output/\{output\_016.txt, top\_output\_005.txt,top\_output\_016.txt\}
+\item  For high support values we are giving the output.txt file and for lower support values, where the result size is large, we provide top\_output.txt file containing the 
+top rules for each conclusion.
+output/\{output\_s10\_c60.txt , output\_s70\_c80.txt,  top\_output\_s10\_c60.txt,  top\_output\_s5\_c35.txt,  top\_output\_s3\_c60.txt \}
 \end{itemize}
 
 \subsection* {Compilation}
