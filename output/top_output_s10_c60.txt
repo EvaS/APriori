@@ -1,0 +1,90 @@
+==High-confidence association rules (min_conf:60.0%)
+["BREATH"="No", "COUGH"="No", "DEPRESSION"="No", "DUST"="No", "EMPLOYED_911"="Yes", "GENDER"="Male", "MARITAL_STATUS"="Married"] =>["HEADACHE"="No"] Conf: 100.00 % , Supp: 10.01 % 
+["BREATH"="No", "CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "DUST"="No", "GENDER"="Male", "MARITAL_STATUS"="Married", "THROAT"="No"] =>["HEADACHE"="No"] Conf: 100.00 % , Supp: 10.91 % 
+["CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "DUST"="No", "EMPLOYED_911"="Yes", "GENDER"="Male", "MARITAL_STATUS"="Married", "THROAT"="No"] =>["HEADACHE"="No"] Conf: 100.00 % , Supp: 11.11 % 
+["CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "DUST"="No", "GENDER"="Male", "MARITAL_STATUS"="Married", "THROAT"="No"] =>["HEADACHE"="No"] Conf: 100.00 % , Supp: 12.21 % 
+["COUGH"="No", "DUST"="No", "EDUCATION"="College +", "GENDER"="Male", "MARITAL_STATUS"="Married", "THROAT"="No"] =>["HEADACHE"="No"] Conf: 100.00 % , Supp: 10.01 % 
+["CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "DUST"="No", "EDUCATION"="College +", "HEADACHE"="No", "SMOKER_ST"="Never smoked"] =>["SKIN"="No"] Conf: 99.16 % , Supp: 11.81 % 
+["CENSUS_RACE"="White (non Hispanic)", "DUST"="No", "EDUCATION"="College +", "HEADACHE"="No", "SMOKER_ST"="Never smoked", "THROAT"="No"] =>["SKIN"="No"] Conf: 99.15 % , Supp: 11.71 % 
+["CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "DEPRESSION"="No", "DUST"="No", "EDUCATION"="College +", "GENDER"="Male", "HEADACHE"="No"] =>["BREATH"="No"] Conf: 99.12 % , Supp: 11.31 % 
+["CENSUS_RACE"="White (non Hispanic)", "DUST"="No", "EDUCATION"="College +", "EMPLOYED_911"="Yes", "HEADACHE"="No", "SMOKER_ST"="Never smoked", "THROAT"="No"] =>["SKIN"="No"] Conf: 99.12 % , Supp: 11.21 % 
+["CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "DUST"="No", "EDUCATION"="College +", "EMPLOYED_911"="Yes", "HEADACHE"="No", "SMOKER_ST"="Never smoked"] =>["SKIN"="No"] Conf: 99.12 % , Supp: 11.21 % 
+["BREATH"="No", "CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "DUST"="No", "EDUCATION"="College +", "HEADACHE"="No", "SMOKER_ST"="Never smoked"] =>["SKIN"="No"] Conf: 99.08 % , Supp: 10.81 % 
+["CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "DEPRESSION"="No", "DUST"="No", "EDUCATION"="College +", "GENDER"="Male", "HEADACHE"="No", "SKIN"="No"] =>["BREATH"="No"] Conf: 99.08 % , Supp: 10.81 % 
+["GENDER"="Male", "INCOME_SLAB"="$150000 or More", "MARITAL_STATUS"="Married"] =>["EMPLOYED_911"="Yes"] Conf: 99.07 % , Supp: 10.61 % 
+["CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "DEPRESSION"="No", "DUST"="No", "EDUCATION"="College +", "GENDER"="Male", "HEADACHE"="No", "THROAT"="No"] =>["BREATH"="No"] Conf: 99.07 % , Supp: 10.61 % 
+["CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "DEPRESSION"="No", "EDUCATION"="College +", "GENDER"="Male", "HEADACHE"="No", "MARITAL_STATUS"="Married"] =>["BREATH"="No"] Conf: 99.06 % , Supp: 10.51 % 
+["CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "DEPRESSION"="No", "DUST"="No", "EDUCATION"="College +", "GENDER"="Male", "SKIN"="No", "THROAT"="No"] =>["BREATH"="No"] Conf: 99.04 % , Supp: 10.31 % 
+["GENDER"="Male", "INCOME_SLAB"="$150000 or More", "MARITAL_STATUS"="Married", "SKIN"="No"] =>["EMPLOYED_911"="Yes"] Conf: 99.01 % , Supp: 10.01 % 
+["BREATH"="No", "DEPRESSION"="No", "EDUCATION"="College +", "EMPLOYED_911"="Yes", "HEADACHE"="No", "SMOKER_ST"="Never smoked", "THROAT"="No"] =>["COUGH"="No"] Conf: 98.60 % , Supp: 14.11 % 
+["BREATH"="No", "DEPRESSION"="No", "EDUCATION"="College +", "EMPLOYED_911"="Yes", "HEADACHE"="No", "SKIN"="No", "SMOKER_ST"="Never smoked", "THROAT"="No"] =>["COUGH"="No"] Conf: 98.53 % , Supp: 13.41 % 
+["BREATH"="No", "CENSUS_RACE"="White (non Hispanic)", "DEPRESSION"="No", "EDUCATION"="College +", "EMPLOYED_911"="Yes", "SMOKER_ST"="Never smoked", "THROAT"="No"] =>["COUGH"="No"] Conf: 98.32 % , Supp: 11.71 % 
+["AGE_GROUP"="25-44 years", "CENSUS_RACE"="White (non Hispanic)", "DEPRESSION"="No", "DUST"="No"] =>["EMPLOYED_911"="Yes"] Conf: 98.26 % , Supp: 11.31 % 
+["BREATH"="No", "CENSUS_RACE"="White (non Hispanic)", "DEPRESSION"="No", "EDUCATION"="College +", "EMPLOYED_911"="Yes", "HEADACHE"="No", "SMOKER_ST"="Never smoked", "THROAT"="No"] =>["COUGH"="No"] Conf: 98.26 % , Supp: 11.31 % 
+["BREATH"="No", "CENSUS_RACE"="White (non Hispanic)", "DEPRESSION"="No", "EDUCATION"="College +", "EMPLOYED_911"="Yes", "SKIN"="No", "SMOKER_ST"="Never smoked", "THROAT"="No"] =>["COUGH"="No"] Conf: 98.26 % , Supp: 11.31 % 
+["CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "EDUCATION"="College +", "INCOME_SLAB"="$75000 to less than $150000", "THROAT"="No"] =>["EMPLOYED_911"="Yes"] Conf: 98.25 % , Supp: 11.21 % 
+["CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "EDUCATION"="College +", "HEADACHE"="No", "INCOME_SLAB"="$75000 to less than $150000", "THROAT"="No"] =>["EMPLOYED_911"="Yes"] Conf: 98.23 % , Supp: 11.11 % 
+["AGE_GROUP"="25-44 years", "COUGH"="No", "DEPRESSION"="No", "DUST"="No", "HEADACHE"="No", "SKIN"="No"] =>["THROAT"="No"] Conf: 95.76 % , Supp: 11.31 % 
+["AGE_GROUP"="25-44 years", "COUGH"="No", "DEPRESSION"="No", "DUST"="No", "EMPLOYED_911"="Yes", "HEADACHE"="No"] =>["THROAT"="No"] Conf: 95.58 % , Supp: 10.81 % 
+["AGE_GROUP"="25-44 years", "BREATH"="No", "COUGH"="No", "DEPRESSION"="No", "DUST"="No", "HEADACHE"="No", "SKIN"="No"] =>["THROAT"="No"] Conf: 95.54 % , Supp: 10.71 % 
+["AGE_GROUP"="25-44 years", "COUGH"="No", "DEPRESSION"="No", "DUST"="No", "EMPLOYED_911"="Yes", "HEADACHE"="No", "SKIN"="No"] =>["THROAT"="No"] Conf: 95.50 % , Supp: 10.61 % 
+["CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "EMPLOYED_911"="Yes", "INCOME_SLAB"="$150000 or More", "SKIN"="No", "THROAT"="No"] =>["EDUCATION"="College +"] Conf: 95.45 % , Supp: 10.51 % 
+["BREATH"="No", "COUGH"="No", "DEPRESSION"="No", "SMOKER_ST"="Former smoker"] =>["THROAT"="No"] Conf: 95.45 % , Supp: 10.51 % 
+["CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "EMPLOYED_911"="Yes", "HEADACHE"="No", "INCOME_SLAB"="$150000 or More", "SKIN"="No", "THROAT"="No"] =>["EDUCATION"="College +"] Conf: 95.37 % , Supp: 10.31 % 
+["BREATH"="No", "CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "EMPLOYED_911"="Yes", "INCOME_SLAB"="$150000 or More", "THROAT"="No"] =>["EDUCATION"="College +"] Conf: 95.28 % , Supp: 10.11 % 
+["COUGH"="No", "EMPLOYED_911"="Yes", "INCOME_SLAB"="$150000 or More", "SKIN"="No", "THROAT"="No"] =>["EDUCATION"="College +"] Conf: 95.24 % , Supp: 12.01 % 
+["BREATH"="No", "CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "EMPLOYED_911"="Yes", "HEADACHE"="No", "INCOME_SLAB"="$150000 or More", "THROAT"="No"] =>["EDUCATION"="College +"] Conf: 95.24 % , Supp: 10.01 % 
+["BREATH"="No", "GENDER"="Male", "HEADACHE"="No", "INCOME_SLAB"="$150000 or More", "SKIN"="No"] =>["CENSUS_RACE"="White (non Hispanic)"] Conf: 92.66 % , Supp: 10.11 % 
+["BREATH"="No", "GENDER"="Male", "INCOME_SLAB"="$150000 or More", "SKIN"="No"] =>["CENSUS_RACE"="White (non Hispanic)"] Conf: 92.24 % , Supp: 10.71 % 
+["BREATH"="No", "GENDER"="Male", "HEADACHE"="No", "INCOME_SLAB"="$150000 or More"] =>["CENSUS_RACE"="White (non Hispanic)"] Conf: 92.04 % , Supp: 10.41 % 
+["BREATH"="No", "EMPLOYED_911"="Yes", "GENDER"="Male", "INCOME_SLAB"="$150000 or More", "SKIN"="No"] =>["CENSUS_RACE"="White (non Hispanic)"] Conf: 91.96 % , Supp: 10.31 % 
+["BREATH"="No", "EMPLOYED_911"="Yes", "GENDER"="Male", "HEADACHE"="No", "INCOME_SLAB"="$150000 or More"] =>["CENSUS_RACE"="White (non Hispanic)"] Conf: 91.74 % , Supp: 10.01 % 
+["AGE_GROUP"="45-64 years", "DEPRESSION"="No", "EMPLOYED_911"="Yes", "HEADACHE"="No", "MARITAL_STATUS"="Married"] =>["GENDER"="Male"] Conf: 82.40 % , Supp: 10.31 % 
+["AGE_GROUP"="45-64 years", "DEPRESSION"="No", "EMPLOYED_911"="Yes", "MARITAL_STATUS"="Married"] =>["GENDER"="Male"] Conf: 82.31 % , Supp: 10.71 % 
+["DEPRESSION"="No", "SKIN"="No", "SMOKER_ST"="Former smoker", "THROAT"="No"] =>["DUST"="No"] Conf: 82.09 % , Supp: 11.01 % 
+["DEPRESSION"="No", "GENDER"="Male", "SKIN"="No", "SMOKER_ST"="Former smoker"] =>["DUST"="No"] Conf: 81.97 % , Supp: 10.01 % 
+["DEPRESSION"="No", "HEADACHE"="No", "SKIN"="No", "SMOKER_ST"="Former smoker", "THROAT"="No"] =>["DUST"="No"] Conf: 81.75 % , Supp: 10.31 % 
+["DEPRESSION"="No", "SMOKER_ST"="Former smoker", "THROAT"="No"] =>["DUST"="No"] Conf: 81.43 % , Supp: 11.41 % 
+["AGE_GROUP"="45-64 years", "CENSUS_RACE"="White (non Hispanic)", "DEPRESSION"="No", "EMPLOYED_911"="Yes", "HEADACHE"="No"] =>["GENDER"="Male"] Conf: 81.38 % , Supp: 11.81 % 
+["AGE_GROUP"="45-64 years", "DEPRESSION"="No", "DUST"="No", "EMPLOYED_911"="Yes", "HEADACHE"="No"] =>["GENDER"="Male"] Conf: 81.34 % , Supp: 10.91 % 
+["BREATH"="No", "DEPRESSION"="No", "SKIN"="No", "SMOKER_ST"="Former smoker"] =>["DUST"="No"] Conf: 81.34 % , Supp: 10.91 % 
+["AGE_GROUP"="45-64 years", "CENSUS_RACE"="White (non Hispanic)", "DEPRESSION"="No", "DUST"="No", "HEADACHE"="No"] =>["GENDER"="Male"] Conf: 81.30 % , Supp: 10.01 % 
+["BREATH"="No", "COUGH"="No", "DUST"="No", "GENDER"="Male", "MARITAL_STATUS"="Married", "THROAT"="No"] =>["DEPRESSION"="No"] Conf: 80.47 % , Supp: 10.31 % 
+["BREATH"="No", "COUGH"="No", "DUST"="No", "GENDER"="Male", "HEADACHE"="No", "MARITAL_STATUS"="Married", "THROAT"="No"] =>["DEPRESSION"="No"] Conf: 80.47 % , Supp: 10.31 % 
+["BREATH"="No", "CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "DUST"="No", "EDUCATION"="College +", "GENDER"="Male", "THROAT"="No"] =>["DEPRESSION"="No"] Conf: 80.15 % , Supp: 10.91 % 
+["BREATH"="No", "COUGH"="No", "EDUCATION"="College +", "GENDER"="Male", "SMOKER_ST"="Never smoked", "THROAT"="No"] =>["DEPRESSION"="No"] Conf: 80.00 % , Supp: 11.61 % 
+["BREATH"="No", "CENSUS_RACE"="White (non Hispanic)", "COUGH"="No", "DUST"="No", "EDUCATION"="College +", "GENDER"="Male", "SKIN"="No", "THROAT"="No"] =>["DEPRESSION"="No"] Conf: 79.84 % , Supp: 10.31 % 
+["BREATH"="Yes", "EMPLOYED_911"="Yes", "THROAT"="Yes"] =>["COUGH"="Yes"] Conf: 77.27 % , Supp: 11.91 % 
+["BREATH"="No", "COUGH"="No", "EMPLOYED_911"="Yes", "HEADACHE"="No", "INCOME_SLAB"="$150000 or More"] =>["MARITAL_STATUS"="Married"] Conf: 76.64 % , Supp: 10.51 % 
+["BREATH"="No", "COUGH"="No", "EDUCATION"="College +", "HEADACHE"="No", "INCOME_SLAB"="$150000 or More"] =>["MARITAL_STATUS"="Married"] Conf: 76.47 % , Supp: 10.41 % 
+["BREATH"="No", "COUGH"="No", "EMPLOYED_911"="Yes", "HEADACHE"="No", "INCOME_SLAB"="$150000 or More", "SKIN"="No"] =>["MARITAL_STATUS"="Married"] Conf: 75.94 % , Supp: 10.11 % 
+["BREATH"="No", "COUGH"="No", "EDUCATION"="College +", "EMPLOYED_911"="Yes", "INCOME_SLAB"="$150000 or More"] =>["MARITAL_STATUS"="Married"] Conf: 75.94 % , Supp: 10.11 % 
+["BREATH"="Yes", "THROAT"="Yes"] =>["COUGH"="Yes"] Conf: 75.88 % , Supp: 12.91 % 
+["BREATH"="No", "COUGH"="No", "EDUCATION"="College +", "HEADACHE"="No", "INCOME_SLAB"="$150000 or More", "SKIN"="No"] =>["MARITAL_STATUS"="Married"] Conf: 75.76 % , Supp: 10.01 % 
+["DUST"="Yes", "THROAT"="Yes"] =>["DEPRESSION"="Yes"] Conf: 74.64 % , Supp: 10.31 % 
+["BREATH"="No", "EMPLOYED_911"="Yes", "MARITAL_STATUS"="Not Married", "SKIN"="No", "THROAT"="No"] =>["AGE_GROUP"="25-44 years"] Conf: 74.13 % , Supp: 10.61 % 
+["EMPLOYED_911"="Yes", "MARITAL_STATUS"="Not Married", "SMOKER_ST"="Never smoked"] =>["AGE_GROUP"="25-44 years"] Conf: 73.94 % , Supp: 10.51 % 
+["BREATH"="No", "EMPLOYED_911"="Yes", "MARITAL_STATUS"="Not Married", "THROAT"="No"] =>["AGE_GROUP"="25-44 years"] Conf: 73.68 % , Supp: 11.21 % 
+["MARITAL_STATUS"="Not Married", "SKIN"="No", "SMOKER_ST"="Never smoked"] =>["AGE_GROUP"="25-44 years"] Conf: 73.57 % , Supp: 10.31 % 
+["BREATH"="Yes", "COUGH"="Yes", "EMPLOYED_911"="Yes"] =>["THROAT"="Yes"] Conf: 73.46 % , Supp: 11.91 % 
+["EDUCATION"="College +", "EMPLOYED_911"="Yes", "MARITAL_STATUS"="Not Married", "SKIN"="No", "THROAT"="No"] =>["AGE_GROUP"="25-44 years"] Conf: 73.43 % , Supp: 10.51 % 
+["AGE_GROUP"="25-44 years", "COUGH"="No", "DEPRESSION"="No", "EDUCATION"="College +", "THROAT"="No"] =>["SMOKER_ST"="Never smoked"] Conf: 73.08 % , Supp: 11.41 % 
+["BREATH"="Yes", "COUGH"="Yes"] =>["THROAT"="Yes"] Conf: 72.88 % , Supp: 12.91 % 
+["AGE_GROUP"="25-44 years", "BREATH"="No", "COUGH"="No", "DEPRESSION"="No", "EDUCATION"="College +", "THROAT"="No"] =>["SMOKER_ST"="Never smoked"] Conf: 72.60 % , Supp: 10.61 % 
+["AGE_GROUP"="25-44 years", "COUGH"="No", "DEPRESSION"="No", "EDUCATION"="College +", "HEADACHE"="No", "THROAT"="No"] =>["SMOKER_ST"="Never smoked"] Conf: 72.60 % , Supp: 10.61 % 
+["AGE_GROUP"="25-44 years", "BREATH"="No", "COUGH"="No", "DEPRESSION"="No", "EDUCATION"="College +", "HEADACHE"="No", "THROAT"="No"] =>["SMOKER_ST"="Never smoked"] Conf: 72.46 % , Supp: 10.01 % 
+["AGE_GROUP"="25-44 years", "COUGH"="No", "DEPRESSION"="No", "EDUCATION"="College +", "SKIN"="No", "THROAT"="No"] =>["SMOKER_ST"="Never smoked"] Conf: 72.30 % , Supp: 10.71 % 
+["AGE_GROUP"="45-64 years", "COUGH"="Yes"] =>["THROAT"="Yes"] Conf: 71.94 % , Supp: 10.01 % 
+["COUGH"="Yes", "DEPRESSION"="Yes", "EMPLOYED_911"="Yes"] =>["THROAT"="Yes"] Conf: 71.86 % , Supp: 12.01 % 
+["COUGH"="Yes", "DEPRESSION"="Yes"] =>["THROAT"="Yes"] Conf: 71.58 % , Supp: 13.11 % 
+["CENSUS_RACE"="White (non Hispanic)", "EDUCATION"="College +", "THROAT"="Yes"] =>["DEPRESSION"="Yes"] Conf: 71.05 % , Supp: 10.81 % 
+["BREATH"="Yes", "EMPLOYED_911"="Yes", "THROAT"="Yes"] =>["DEPRESSION"="Yes"] Conf: 70.13 % , Supp: 10.81 % 
+["BREATH"="Yes", "THROAT"="Yes"] =>["DEPRESSION"="Yes"] Conf: 69.41 % , Supp: 11.81 % 
+["DUST"="No", "EMPLOYED_911"="Yes", "THROAT"="Yes"] =>["COUGH"="Yes"] Conf: 69.08 % , Supp: 10.51 % 
+["EDUCATION"="College +", "EMPLOYED_911"="Yes", "THROAT"="Yes"] =>["DEPRESSION"="Yes"] Conf: 68.91 % , Supp: 13.31 % 
+["DUST"="No", "THROAT"="Yes"] =>["COUGH"="Yes"] Conf: 67.04 % , Supp: 12.01 % 
+["COUGH"="Yes", "EMPLOYED_911"="Yes", "THROAT"="Yes"] =>["BREATH"="Yes"] Conf: 65.38 % , Supp: 11.91 % 
+["BREATH"="Yes", "EMPLOYED_911"="Yes", "GENDER"="Male"] =>["COUGH"="Yes"] Conf: 65.00 % , Supp: 10.41 % 
+["COUGH"="Yes", "THROAT"="Yes"] =>["BREATH"="Yes"] Conf: 64.50 % , Supp: 12.91 % 
+["COUGH"="Yes", "DEPRESSION"="Yes"] =>["BREATH"="Yes"] Conf: 61.75 % , Supp: 11.31 % 
+["COUGH"="Yes", "DEPRESSION"="Yes", "EMPLOYED_911"="Yes"] =>["BREATH"="Yes"] Conf: 61.68 % , Supp: 10.31 % 

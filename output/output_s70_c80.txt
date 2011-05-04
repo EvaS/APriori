@@ -1,0 +1,17 @@
+==Large itemsets (min_sup:70.0%)
+["EMPLOYED_911"="Yes"] 89.79 % 
+["SKIN"="No"] 87.59 % 
+["HEADACHE"="No"] 84.58 % 
+["EMPLOYED_911"="Yes", "SKIN"="No"] 79.18 % 
+["HEADACHE"="No", "SKIN"="No"] 76.78 % 
+["EMPLOYED_911"="Yes", "HEADACHE"="No"] 75.98 % 
+["CENSUS_RACE"="White (non Hispanic)"] 74.57 % 
+["EDUCATION"="College +"] 73.37 % 
+
+==High-confidence association rules (min_conf:80.0%)
+["HEADACHE"="No"] =>["SKIN"="No"] Conf: 90.77 % , Supp: 76.78 % 
+["SKIN"="No"] =>["EMPLOYED_911"="Yes"] Conf: 90.40 % , Supp: 79.18 % 
+["HEADACHE"="No"] =>["EMPLOYED_911"="Yes"] Conf: 89.82 % , Supp: 75.98 % 
+["EMPLOYED_911"="Yes"] =>["SKIN"="No"] Conf: 88.18 % , Supp: 79.18 % 
+["SKIN"="No"] =>["HEADACHE"="No"] Conf: 87.66 % , Supp: 76.78 % 
+["EMPLOYED_911"="Yes"] =>["HEADACHE"="No"] Conf: 84.62 % , Supp: 75.98 % 
