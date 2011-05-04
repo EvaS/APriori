@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * Main class implementing APriori algorithm
+ */
 public class APriori {
 
 	private DataSet dataset;
@@ -16,14 +19,21 @@ public class APriori {
 	private double minConf;
 	TreeMap<Double, LinkedList<ItemSet>> frequent = new TreeMap<Double, LinkedList<ItemSet>>();
 	TreeMap<Double, HashMap<ItemSet, ItemSet>> confident = new TreeMap<Double, HashMap<ItemSet, ItemSet>>();
-	private String FILENAME = "output.txt";
+	private String FILENAME = "output.txt"; // Filename where results of rules
+											// are stored
 
+	/*
+	 * Constructor of APriori
+	 */
 	public APriori(DataSet d, double minSupp, double minConf) {
 		this.dataset = d;
 		this.minSupp = minSupp;
 		this.minConf = minConf;
 	}
 
+	/*
+	 * Generates L1 set of dataset
+	 */
 	public Map<ItemSet, Integer> generateL1() {
 
 		// each individual item with its corresponding frequency
@@ -64,8 +74,8 @@ public class APriori {
 		return itemsL1;
 	}
 
-	/**
-	 * @author - eva
+	/*
+	 * Alternative implementation of second step of APriori algorithm
 	 */
 	public void mineFreqSets() {
 		// initial itemset
@@ -108,10 +118,9 @@ public class APriori {
 		}
 	}
 
-	/**
-	 * @author : aman
+	/*
+	 * Second step of APriori algorithm
 	 */
-
 	public void mineFrequentItemSets() {
 		// initial item sets
 		Map<ItemSet, Integer> itemsMap;
@@ -155,8 +164,8 @@ public class APriori {
 		}
 	}
 
-	/**
-	 * R: l => r ; l,r E T
+	/*
+	 * Generates rules of high confidence (>min_supp) R: l => r ; l,r E T
 	 */
 	public void generateRules() {
 
@@ -190,6 +199,9 @@ public class APriori {
 		}
 	}
 
+	/*
+	 * Saves the rules to output file
+	 */
 	public void outputRules() {
 
 		FileWriter fstream;
@@ -235,6 +247,9 @@ public class APriori {
 		}
 	}
 
+	/*
+	 * Outputs top-5 rules for each conclusion to top_ouput file
+	 */
 	public void outputTopRules() {
 
 		FileWriter fstream;
@@ -251,16 +266,15 @@ public class APriori {
 			for (Double conf : this.confident.descendingKeySet()) {
 				for (ItemSet l : this.confident.get(conf).keySet()) {
 					ItemSet r = this.confident.get(conf).get(l);
-					String conc=r.items.first();
+					String conc = r.items.first();
 					if (cntRules.containsKey(conc)) {
-						int p=cntRules.get(conc);
-						if(p>=5)
+						int p = cntRules.get(conc);
+						if (p >= 5)
 							continue;
-						cntRules.put(conc, p+1);
+						cntRules.put(conc, p + 1);
 					} else {
 						cntRules.put(conc, 1);
 					}
-					
 					// LHS
 					this.writeItemSet(l, out);
 					out.write("=>");
@@ -281,7 +295,7 @@ public class APriori {
 		}
 	}
 
-	/**
+	/*
 	 * Prints an itemset
 	 */
 	public void printItemSet(ItemSet is) {
@@ -294,7 +308,7 @@ public class APriori {
 		System.out.println("] ");
 	}
 
-	/**
+	/*
 	 * Writes an itemset to file
 	 */
 	public void writeItemSet(ItemSet is, PrintWriter out) {
@@ -315,14 +329,14 @@ public class APriori {
 	public static void main(String args[]) {
 		APriori apriori;
 
-		if(args.length<3){
+		if (args.length < 3) {
 			System.err.println("Wrong number of arguments!");
-			System.err.println("Usage: DATASET min_sup min_conf");
+			System.err.println("Usage: <Dataset> <min_sup> <min_conf>");
 			System.exit(-1);
 		}
-		
+
 		String fileName = args[0];
-		// Second boolean argument because we have titled dataset
+		// Second boolean argument true because we have titled dataset
 		DataSet d = new DataSet(fileName, true);
 
 		double minSupp, minConf;

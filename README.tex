@@ -1,7 +1,8 @@
 \documentclass[11pt]{article}
-\usepackage[margin=2.7cm,nohead]{geometry}
+\usepackage[margin=2.0cm,nohead]{geometry}
 \usepackage{url}
 \usepackage{graphicx}
+\usepackage{tabularx}
 
 \title{Project 2 \\ Advanced Database Systems \\}
 
@@ -18,35 +19,257 @@ Evangelia Sitaridi \\ es2996@cs.columbia.edu
 \maketitle
 
 
-\section{Dataset Description}
+\section{Dataset}
+This dataset \cite{911d} describes the data of interviews of World Trade Center 911 workers. We found it very interesting since it combined various demographic attributes and attributes
+describing the consequences from the events of 911. The attributes of the dataset are described in table \ref{911t} and their name in their initial dataset is in parentheses.
 
-\section{Preprocessing}
+\begin{table}
+\begin{tabular}{|l|l|p{5cm}|}
+\hline
+VARIABLE\_NAME & VARIABLE\_LABEL & QUESTION ASKED? \\
+\hline
+GENDER & Gender & What is the enrollee's sex? \\
+\hline
+EMPLOYED\_911 &
+Employment Status on 9/11/01 &
+Was the enrollee employed on 9/11/01?\\
+\hline
+SMOKER\_ST &
+Smoking Status &
+What was the smoking status of the enrollee at the time of interview?\\
+\hline
+COUGH &
+New or Worsening Cough &
+Did the enrollee report new onset or worsening of a persistent cough since 9/11/01?\\
+\hline
+DEPRESSION &
+New or Worsening Depression &
+Did the enrollee report new onset or worsening depression, anxiety, or other emotional problems since 9/11/01?\\
+\hline
+HEADACHE &
+New or Worsening Headache &
+Did the enrollee report new onset or worsening frequent, severe headaches since 9/11/01?\\
+\hline
+BREATH &
+New or Worsening Shortness of Breath &
+Did the enrollee report new onset or worsening of shortness of breath since 9/11/01?\\
+\hline
+SKIN &
+New or Worsening Skin Problems &
+Did the enrollee report new onset or worsening of skin rash/irritation since 9/11/01?\\
+\hline
+THROAT &
+New or Worsening Throat Irritation &
+Did the enrollee report new onset or worsening of throat irritation since 9/11/01?\\
+\hline
+DUST &
+Dust &
+Did the enrollee indicate that he/she was outdoors on 9/11/01 within the dust or debris cloud resulting from the collapse of the World Trade Center?\\
+\hline
+EDUCATION &
+Education Level &
+What was the highest grade or year of school completed by the enrollee at the time of interview?\\
+\hline
+INCOME\_SLAB &
+Household Income &
+What was the enrollee's total household income in 2002 before taxes?\\
+\hline
+AGE\_GROUP &
+Age Group on 9/11/01 &
+What was the enrollee's age on 9/11/01?\\
+\hline
+CENSUS\_RACE &
+Race/Ethnicity &
+What is the enrollee's combined race/ethnicity?\\
+\hline
+MARITAL\_STATUS &
+Marital\ Status &
+What was the enrollee's marital status at the time of interview?\\
+\hline
+\end{tabular}
+\caption{911 Dataset Attributes}
+\label{911t}
+\end{table}
 
-\section{Results}
+\section{Data Preprocessing}
 
-During our data analysis we faced the problem of many complex rules 
-Below we analyze the most interesting associations in the selected dataset. Apart from 
-
-Support 10\% Confidence 90\%
-\textit{Rule 1}
-["HEARING" = "No", "INCOME_SLAB" = "\$150000 or More", "SMOKER_ST" = "Never smoked"] =>["EDUCATION" = "College +"] Conf: 95.28 \% , Supp: 10.11 \%
-
-This rules associates education of the participants to income, smoking and hearing condition after 911 events. It relates 
-
-\textit{Rule 2}
-["BREATH" = "No", "EMPLOYED_911" = "Yes", "GENDER" = "Male", "HEARING" = "No", "INCOME_SLAB" = "\$150000 or More"] =>["CENSUS_RACE" = "White (non Hispanic)"] Conf: 91.96 \% , Supp: 10.31 \% 
-
-Support 40\%
-\textit{Rule 3}
-["CENSUS_RACE"="White (non Hispanic)", "GENDER"="Male"] =>["EMPLOYED_911"="Yes"] Conf: 92.63\% , Supp: 46.55\% 
-
-
-\textit{Rule 3}
-
+The initial dataset [1] contained 71427 rows and more than fifty columns. Thus the initial size was too large both in terms of rows and column number. To reduce the execution time of the program and facilitate the testing of our code we did the following modifications:
+\begin{enumerate}
+   \item keep the first 1000 rows of dataset
+   \item select 17 columns we found most interesting, and are the ones described later. We first removed the columns that had mostly NULL values. Some of the columns were removed after      experimentation since they did not add to the results.
+   \item due to a problem in the format of the initial dataset the value of the participants' income was represented using comma, e.g.
+   \item attibute renamed to more intuitive ones
+25,000 instead of 25.000. This confused our program since it regarded as an extra column. That is why we replaced each  \textit{,000} with string  \textit{000}.
+\end{enumerate}
+Finally, the quotes around the value of each column were added by OpenOffice SpreadSheet program but we let them since we did not feel they affected the legibility of the results.
 
 \section{Implementation}
 
-   
+The dataset is stored in the DataSet class object, each row in the dataset is defined as a Transaction class object. If a dataset has a title in the first line, we add as an item value
+the name of the attribues concatenated with the value of the attribute.
+
+\begin{verbatim}
+Algorithm:
+
+DataSet(fileName, hasTitle)
+    if(hasTitle)
+       title_attrs=title.split(",")
+    foreach (line)
+        line_attrs = line.split(",")
+        if(hasTitle)
+            // adds item: title_attrs[i] = line_attr[i]  in the list
+            transactions.add(line_attrs,title_attrs)
+        else
+            transactions.add(line_attrs)
+\end{verbatim}
+
+After each iteration of the Apriori algorithm we generate a new instance of ItemSet class.
+So, for the first round of the algorithm we use.
+
+\begin{verbatim}
+GenerateL1()
+    singles // stores the frequency of each item.
+    itemsL1 // stores the items which have support > min_support
+    
+    transactions = dataset.getTransactions();
+    foreach (transactions)
+         foreach (item in transactions)
+              calculate the frequency for each item.
+    
+    foreach (singles)
+        supp=singles.get(s) / (dataset.size() * 1.0)
+        if (supp >= minSupp) 
+            itemsL1 // add a new ItemSet(singles)
+\end{verbatim}
+
+Subsequent rounds of Apriori uses this base itemsL1, new string is added into the item set using nextString(ItemSet) method.
+
+\begin{verbatim}
+nextString(ItemSet i1, ItemSet i2)
+    // as the item set is generated iteratively, length of i1 & i2 should match
+    if len(i1) != len(i2)
+        return null        
+    else 
+        len_x = length of i1
+    // check both the strings are equal except the last element
+    while (len_x > 1)
+         if i1.item() != i2.item()
+              return null
+         // check the last element
+         x = last element of i1
+         y = last element of i2
+         if (x < y)
+              return y
+    return null
+\end{verbatim}
+
+
+\section{Results}
+
+During our data analysis we faced the problem of many complex rules  so apart from saving the frequent item-sets and rules we create an extra file: top\_output.txt which contains only
+top five-rules for each possible conclusion.  Below we analyze the most interesting associations in the selected dataset.
+
+\textbf{Support 10\% Confidence 60\%}
+
+\textit{Rule 1}
+
+["COUGH"="No", "EMPLOYED\_911"="Yes", "INCOME\_SLAB"="\$150000 or More", 
+
+"SKIN"="No", "THROAT"="No"] \\ 
+$=>$ ["EDUCATION"="College +"] Conf: 95.24\% , Supp: 12.01\%  
+
+This rules associates education of the participants to income, smoking and hearing condition after 911 events. It seems that people with high income, employed and
+relatively not physically affected 911 events are educated. \\
+
+\textit{Rule 2}
+
+["COUGH"="No", "GENDER"="Male", "INCOME\_SLAB"="\$150000 or More", "SKIN"="No"] \\
+$=>$ ["CENSUS\_RACE"="White (non Hispanic)"] Conf: 92.66 \% , Supp: 10.11 \% 
+
+Again, there is another demographic that weatlhy males were white. \\
+
+\textit{Rule 3}
+
+["AGE\_GROUP"="25-44 years", "CENSUS\_RACE"="White (non Hispanic)", "DEPRESSION"="No", "DUST"="No"]\\
+ $=>$ ["EMPLOYED\_911"="Yes"] Conf: 98.26 \% , Supp: 11.31 \%  \\
+
+\textit{Rule 4}
+
+["COUGH"="Yes", "THROAT"="Yes"] $=>$ ["BREATH"="Yes"] Conf: 64.50\% , Supp: 12.91\%  \\
+
+This rules correlates different conditions caused by 911 events. It seems that participants experiencing cough and throat irritation also experience shortness of breath.\\
+
+\textit{Rule 5}
+
+["AGE\_GROUP"="25-44 years", "COUGH"="No", "DEPRESSION"="No", "EDUCATION"="College +", "HEADACHE"="No", "THROAT"="No"]\\
+$=>$ ["SMOKER\_ST"="Never smoked"] Conf: 72.60\% , Supp: 10.61\%  \\
+
+\textit{Rule 6}
+
+["BREATH"="Yes", "THROAT"="Yes"] =$>$["DEPRESSION"="Yes"] Conf: 69.41\% , Supp: 11.81\%  \\
+
+This rules relates a mental symptom to physical symptoms. People physically affected from 911 events likely experience symptoms
+of depression. \\
+
+\textit{Rule 7}
+
+["DUST"="Yes", "THROAT"="Yes"] =$>$["DEPRESSION"="Yes"] Conf: 74.64\% , Supp: 10.31\%  \\
+
+\textit{Rule 8}
+
+["DEPRESSION"="Yes"] =$>$["GENDER"="Female"] Conf: 44.62\% , Supp: 20.32\%  
+
+["DEPRESSION"="Yes"] =$>$["GENDER"="Male"] Conf: 55.38\% , Supp: 25.23\% 
+
+This rule implies that depression is more prevalent to male participants. \\
+
+\textit{Rule 9}
+
+["SMOKER\_ST"="Current smoker"] =$>$["EDUCATION"="College +"] Conf: 63.92\% , Supp: 10.11\%  \\
+
+\textbf{Support 5\% Confidence 35\%}
+
+We decided to focus on underpresented groups of participants which might be covered by the previous setting of the algorithm
+
+\textit{Rule 10}
+
+["CENSUS\_RACE"="White (non Hispanic)", "GENDER"="Female", "THROAT"="Yes"] \\
+$=>$["DEPRESSION"="Yes"] Conf: 81.48\% , Supp: 6.61\%   \\
+
+["CENSUS\_RACE"="White (non Hispanic)", "EMPLOYED\_911"="Yes", "GENDER"="Female", "THROAT"="Yes"]\\
+ $=>$["DEPRESSION"="Yes"] Conf: 82.86\% , Supp: 5.81\%  \\
+
+The second of the two rules above sets an extra condition, that a woman is also employed and has higher confidence. We can conclude for that depression
+is slightly more common among employed women. \\
+
+\textit{Rule 11}
+
+["BREATH"="Yes", "HEADACHE"="Yes", "THROAT"="Yes"] $=>$ ["DEPRESSION"="Yes"] Conf: 83.87\% , Supp: 5.21\%  \\
+
+Remembering Rule 6 adding headache condition the chance for a person to be depressed increases significantly from 69.41\% to 83.87\%. \\
+
+\textit{Rule 12}
+
+["AGE\_GROUP"="25-44 years", "INCOME\_SLAB"="\$25000 to less than \$75000"] $=>$["MARITAL\_STATUS"="Not Married"] Conf: 52.73\% , Supp: 5.81\% 
+
+This rules gives us again information on the demographic profile of the participants. Participants aged 25-44 having average income is more likely
+not to be married.\\
+
+\textit{Rule 13}
+
+["DEPRESSION"="No", "INCOME\_SLAB"="\$150000 or More", "MARITAL\_STATUS"="Married", "SMOKER\_ST"="Never smoked"] \\
+$=>$["EDUCATION"="College +"] Conf: 100.00\% , Supp: 5.11\% 
+
+
+\textit{Rule 14}
+Top Reasons for depression:
+
+["BREATH"="Yes", "HEADACHE"="Yes", "THROAT"="Yes"] =>["DEPRESSION"="Yes"] Conf: 83.87\% , Supp: 5.21\% 
+["CENSUS_RACE"="White (non Hispanic)", "EMPLOYED_911"="Yes", "GENDER"="Female", "THROAT"="Yes"] =>["DEPRESSION"="Yes"] Conf: 82.86\% , Supp: 5.81\% 
+["SKIN"="Yes", "THROAT"="Yes"] =>["DEPRESSION"="Yes"] Conf: 82.35\% , Supp: 5.61\% 
+["BREATH"="Yes", "EMPLOYED_911"="Yes", "HEADACHE"="Yes"] =>["DEPRESSION"="Yes"] Conf: 82.05\% , Supp: 6.41\% 
+["CENSUS_RACE"="White (non Hispanic)", "GENDER"="Female", "THROAT"="Yes"] =>["DEPRESSION"="Yes"] Conf: 81.48\% , Supp: 6.61\% 
+
 \section* {Appendix}
 
 \subsection* {File Listing}
@@ -62,8 +285,8 @@ The files are:
 \item src/Transaction.java
 \item src/Makefile
 \item dataset/INTEGRATED-DATASET.csv
-\item output_4f.txt
-\item top\_output\_4f.txt
+\item output/output.txt
+\item output/top\_output\_.txt
 \end{itemize}
 
 \subsection* {Compilation}
@@ -73,6 +296,11 @@ The files are:
 \item\textbf{Execute}: java APriori  $min\_supp$ $min\_conf$ (from src directory)
 
 \end{itemize}
+
+
+\begin{thebibliography}{50}
+\bibitem{911d} \textit{911 Dataset}, \url{http://www.nyc.gov/html/datamine/html/data/terms.html?dataSetJs=raw.js&theIndex=22}
+\end{thebibliography}
 
 
 \end{document}

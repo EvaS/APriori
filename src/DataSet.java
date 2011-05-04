@@ -6,17 +6,21 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Set;
 
+/*
+ * DataSet class
+ */
+
 public class DataSet {
 
 	String titleAttrs[];
 	// list of all transactions objects
 	LinkedList<Transaction> dRows = new LinkedList<Transaction>();
-	// map of <itemSet, support> 
+	// map of <itemSet, support>
 	HashMap<Set<String>, Integer> support = new HashMap<Set<String>, Integer>();
 
 	public DataSet(String fileName, boolean hasTitle) {
 		String dLine;
-		String LOCALROOT = "./911_cleaned/";
+		String LOCALROOT = "./dataset/";
 		try {
 			FileInputStream fstream = new FileInputStream(LOCALROOT + fileName);
 			DataInputStream in = new DataInputStream(fstream);

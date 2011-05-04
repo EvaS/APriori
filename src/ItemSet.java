@@ -2,6 +2,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.TreeSet;
 
+/*
+ * ItemSet class
+ */
 public class ItemSet {
 
 	// ItemSet is sorted according to the String items
