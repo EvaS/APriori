@@ -22,6 +22,20 @@ public class ItemSet {
 			}
 		}
 	}
+	
+	public boolean equals(Object other){
+		  if (other == null) return false;
+		    if (other == this) return true;
+		    if (this.getClass() != other.getClass())return false;
+		    ItemSet is=(ItemSet)other;
+		if(is.items.size()!=this.items.size())
+			return false;
+		if(is.items.containsAll(this.items))
+		return true;
+		
+		return false;
+		
+	}
 
 	public boolean intersectsOne(ItemSet is) {
 		if ((this.items.size() == 1) && (is.items.size() == 1)

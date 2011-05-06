@@ -20,7 +20,8 @@ public class APriori {
 	TreeMap<Double, LinkedList<ItemSet>> frequent = new TreeMap<Double, LinkedList<ItemSet>>();
 	TreeMap<Double, HashMap<ItemSet, ItemSet>> confident = new TreeMap<Double, HashMap<ItemSet, ItemSet>>();
 	private String FILENAME = "output.txt"; // Filename where results of rules
-											// are stored
+
+	// are stored
 
 	/*
 	 * Constructor of APriori
@@ -144,7 +145,24 @@ public class APriori {
 						LinkedList<String> tl = new LinkedList<String>();
 						tl.addAll(i1.items);
 						tl.add(next);
+						boolean isFreq=true;
 						ItemSet c = new ItemSet(tl);
+						//Prune
+						for (int p = 1; p <= (int) Math.pow(2,c.items.size() - 1); p++) {
+							ItemSet l = new ItemSet(p, c);
+							boolean isFreq1=false;
+							for (Double conf : this.frequent.keySet()) {
+								LinkedList<ItemSet> list = this.frequent.get(conf);
+								if (list.contains(l)) {
+									isFreq1=true;break;}
+							}
+							if(!isFreq1){
+								isFreq=false;
+								break;
+							}else isFreq=true;
+						}
+						if(!isFreq)
+							continue;
 						int support = this.dataset.getSupport(c);
 						double suppcent = support / (dataset.size() * 1.0);
 						if (suppcent >= this.minSupp) {
